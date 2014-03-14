@@ -498,6 +498,7 @@
 				syncDimensionsSizes($table, opts);
 				jQuery('#log').html("Time = " + (t2.valueOf() - t1.valueOf()));
 			}
+			return false;
 		});
 		// Rows
 		$table.on('click', '.' + opts.div21Class + ' .' + opts.dimLabelClass, function(event){
@@ -555,7 +556,8 @@
 				syncDimensionsSizes($table, opts);
 			}
 			var t2 = new Date();
-			jQuery('#log').html("Time = " + (t2.valueOf() - t1.valueOf()));
+			// jQuery('#log').html("Time = " + (t2.valueOf() - t1.valueOf()));
+			return false;
 		});
 	}
 	
