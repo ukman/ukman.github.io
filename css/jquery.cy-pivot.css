@@ -47,6 +47,10 @@
 	vertical-align: middle;*/
 }
 
+.dim-label span {
+	vertical-align: middle;
+}
+
 .div21 .dim-label {
 	text-align: left;
 }

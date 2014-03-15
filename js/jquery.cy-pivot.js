@@ -751,7 +751,7 @@
 						var position = $td.position();
 						var nextPosition = $nextTd.position();
 						newWidth = nextPosition.left - position.left; 
-						console.log("newWidth = " + newWidth);
+						// console.log("newWidth = " + newWidth);
 					}
 	
 					$dimLabelDiv.parent().css({width :newWidth});
@@ -825,8 +825,9 @@
 	
 	function getDataValues(opts, context, dimName, sortFieldName) {
 		var items = [];
-		for(var i = 0; i < opts.dimData.length; i++) {
-			var item = opts.dimData[i];
+		var dimData = opts.dimData ? opts.dimData : opts.data;
+		for(var i = 0; i < dimData.length; i++) {
+			var item = dimData[i];
 			if(applyDataFilter(item, context)) {
 				items.push(item);
 			}
@@ -837,8 +838,9 @@
 			var item = items[i];
 			var apply = applyDataFilter(item, context);
 			var value = item[dimName];
-			if(value && value != Number.POSITIVE_INFINITY && exist[value.id] != true) {
-				exist[value.id] = true;
+			var valueId = typeof(value) == 'object' ? value.id : value;
+			if(value && value != Number.POSITIVE_INFINITY && exist[valueId] != true) {
+				exist[valueId] = true;
 				res.push(value);
 			}
 		}
@@ -961,6 +963,8 @@
 			}
 			for(var valIdx = 0; valIdx < values.length; valIdx++) {
 				var value = values[valIdx];
+				var valueId = typeof(value) == 'object' ? value.id : value;
+				var valueLabel = typeof(value) == 'object' ? value.label : value;
 				value.dimName = dimName;
 				newContext[context.length] = value;
 				var dimCellDiv = document.createElement('div');
@@ -971,14 +975,14 @@
 				}
 				var $dimCellDiv = jQuery(dimCellDiv);
 				$dimCellDiv.addClass(opts.dimCellClass + " " + opts.dimCellClass + "-" + dimName + " " + opts.levelClassPrefix + context.length + " " +
-						opts.pivotIdClassPrefix + value.id);
+						opts.pivotIdClassPrefix + valueId);
 				$dimCellDiv.attr({
-					'pivotId' : value.id, 
+					'pivotId' : valueId, 
 					'dimName': dimName,
-					'title':dim.label + " : " + unescape(value.label)
+					'title':dim.label + " : " + unescape(valueLabel)
 					});
 				var cellHtml = opts.dimensionCellRenderer ? opts.dimensionCellRenderer(opts, newContext, false) : "<span title='" + dim.label + ": " + 
-						value.label + "'>"+ "<i class='" + opts.dimCellIconClass + "'></i>" + value.label + "</span>"; 
+						valueLabel + "'>"+ "<i class='" + opts.dimCellIconClass + "'></i>" + valueLabel + "</span>"; 
 				$dimCellDiv.append('<div class="' + opts.dimLabelClass + ' ' + opts.dimLabelClass + '-' + dimName + ' ' +
 						(dim.className ? dim.className + " " : "") +						
 						(newContext.length < dimensions.length ? opts.expandableDimLabelClass : '') +
@@ -991,7 +995,7 @@
 				if( opts.isExpanded(newContext) && newContext.length < dimensions.length) {
 					$divLabel.addClass(opts.expandedDimLabelClass);
 					$divLabel.parent().addClass(opts.expandedDimCellClass);
-					var $childDiv = $div.children('.' + opts.pivotIdClassPrefix + value.id);
+					var $childDiv = $div.children('.' + opts.pivotIdClassPrefix + valueId);
 					drawDimension($childDiv, opts, dimensions, newContext);
 				} else {
 					if(newContext.length < dimensions.length) {
@@ -1052,7 +1056,7 @@
 		// and specified in CSS. In this case pivot table works faster. 
 		syncDimensionCellSizes	: true,
 		
-		//Specifies if pivot table shoulb be resize when window is resized.
+		//Specifies if pivot table should be resize when window is resized.
 		resizable				: true,
 		resizableWidth			: true,
 		resizableHeight			: true,
@@ -1121,6 +1125,11 @@
 		
 		cookiePrefix				: 'cy-pivot-',
 		storeDimConfig				: true,
+
+		dataCellRenderer	: function(items, colContext, rowContext, opts) {
+			var value = items['default'].sum['amount'];
+			return value;
+		},
 		
 		dimensionCellRenderer	 : null // This function(opts, context, isTotal) should render dimension cell
 			/* Example

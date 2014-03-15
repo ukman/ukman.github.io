@@ -1,0 +1,84 @@
+<html>
+	<head>
+		<title>
+			Cynteka Pivot Table 
+		</title>
+		<meta charset="utf-8">
+		
+
+        <script src='http://code.jquery.com/jquery-2.1.0.min.js' type="text/javascript"></script>
+        <script src='//cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.js' type="text/javascript"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<link href="//getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->		
+		
+        
+		<link rel="stylesheet" media="screen" href='css/jquery.cy-pivot.css'/>
+        <script src='js/jquery.cy-pivot.js' type="text/javascript"></script>
+        <script src='js/example/simple.js' type="text/javascript"></script>
+        
+		<link href="//highlightjs.org/static/styles/default.css" rel="stylesheet">
+        <script src='//highlightjs.org/static/highlight.pack.js' type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+     	
+	</head>
+	<body>
+<style>
+.div-data-cell {
+	text-align: right;
+	padding-right:20px;
+}
+
+.dim-cell-icon {
+font-family: 'Glyphicons Halflings';
+}
+.collapsed-dim-label:before {
+content: "\2b";
+}
+.expanded-dim-label:before {
+content: "\2212";
+}
+
+.dim-label-department {
+background-color:#1b85b8; 
+}
+.dim-label-employee {
+background-color:#559e83; 
+}
+.dim-label-year {
+background-color:#ae5a41;
+}
+.dim-label-month {
+background-color:#c3cb71;
+}
+.dim-label-total {
+background-color:#5a5255;
+}
+</style>	
+		<div class="container theme-showcase" role="main">
+			<h1>
+				Cynteka Pivot Table
+				<small>Simple example</small>
+			</h1>
+			<div id="pivot"></div>
+
+			<hr></hr>
+			<footer>
+				<p>
+					Cynteka Pivot Table is licensed under the <a href="http://opensource.org/licenses/MIT">MIT License</a>. 
+					Designed and developed by <a href="mailto:sergey.grigorchuk@gmail.com">Sergey Grigorchuk</a>.
+				</p>
+			</footer>
+
+		</div>
+		
+	</body>
+</html>

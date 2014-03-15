@@ -1,24 +1,272 @@
 <html>
 	<head>
 		<title>
-			Test Index Github Page
+			Cynteka Pivot Table 
 		</title>
-		<link rel="stylesheet" media="screen" href='css/jquery.cy-pivot.css'/>
-		<link rel="stylesheet" media="screen" href='//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css'/>
+		<meta charset="utf-8">
+		
 
         <script src='http://code.jquery.com/jquery-2.1.0.min.js' type="text/javascript"></script>
         <script src='//cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.js' type="text/javascript"></script>
-        <script src='//cdn.jsdelivr.net/jquery.ui/1.10.4/jquery-ui.min.js' type="text/javascript"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<link href="//getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+		<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->		
+		
         
+        <!-- 
+		<link rel="stylesheet" media="screen" href='css/jquery.cy-pivot.css'/>
         <script src='js/jquery.cy-pivot.js' type="text/javascript"></script>
         <script src='js/index.js' type="text/javascript"></script>
+         -->
+        
+		<link href="//highlightjs.org/static/styles/default.css" rel="stylesheet">
+        <script src='//highlightjs.org/static/highlight.pack.js' type="text/javascript"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        
 	</head>
 	<body>
-		<h1>
-			Test Index Github Page
-		</h1>
-		
-		<div id="pivot">
+		<!-- Fixed navbar -->
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Cynteka Pivot Table</a>
+				</div>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#getstarted">Getting Started</a></li>
+						<li><a href="#demo">Demo</a></li>
+						<li><a href="#documentation">Documentation</a></li>
+						<li><a href="#download">Download</a></li>
+						<li><a href="#about">About</a></li>
+
+	              </ul>
+    	      </div>
+			</div>
+		</div>
+	
+		<div class="container theme-showcase" role="main">
+
+			<!-- Main jumbotron for a primary marketing message or call to action -->
+			<div class="jumbotron">
+				<h1>Cynteka Pivot Table</h1>
+				<p>
+					This is a jQuery plugin that can be used on a website. 
+				</p>
+				<p><a href="#documentation" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+			</div>
+
+			<div class="page-header">
+				<h1 id="getstarted">Getting Started</h1>
+			</div>
+			<p>
+				In order to start using the pivot table just include plugin's files to your page and use it.
+			</p>
+			<div class="highlight">
+				<pre>
+					<code class="html">
+&lt;html>
+    &lt;head>
+    
+    	&lt;!-- Include jQuery and jQuery UI with css files -->
+        &lt;script src='http://code.jquery.com/jquery-2.1.0.min.js' type="text/javascript">&lt;/script>
+
+        &lt;link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css">&lt;/link>
+        &lt;script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js">&lt;/script>
+
+        &lt;!-- Include jQuery Cookie plugin -->
+        &lt;script src='//cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.js' type="text/javascript">&lt;/script>
+    					
+        &lt;!-- Include jQuery Cynteka Pivot plugin -->
+        &lt;link rel="stylesheet" media="screen" href="css/jquery.cy-pivot.css">&lt;/link>
+        &lt;script src="js/jquery.cy-pivot.js" type="text/javascript">&lt;/script>
+
+        &lt;script type="text/javascript">
+            $(document).ready(function(){
+    	        $("#pivot").cypivot();
+            });
+        &lt;/script>
+        
+    &lt;/head>
+    &lt;body>
+        &lt;div id="pivot">&lt;/div>
+    &lt;/body>
+&lt;html>
+					</code>
+				</pre>
+			</div>
+			<p>
+			</p>
+			
+			<div class="page-header">
+				<h1 id="documentation">Documentation</h1>
+			</div>
+			<p>
+				<h3>
+					Constructor
+				</h3>
+				
+				<table class="table table-border table-striped">
+					<thead>
+						<tr>
+							<th>
+								Parameter
+							</th>
+							<th>
+								Type
+							</th>
+							<th>
+								Description
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								data
+							</td>
+							<td>
+								array of objects
+							</td>
+							<td>
+								Array of data to be used for pivoting. E.g.
+<pre>
+	<code class="javascript">
+var data = [
+    {
+	    employee : 1,	
+	    department : 1,
+	    year : 2013,
+	    month : 1,
+	    day : 10,
+	    amount : 34	
+    },
+    {
+	    employee : 20,	
+	    department : 2,
+	    year : 2013,
+	    month : 2,
+	    day : 15,
+	    amount : 50	
+    },
+    // etc ...
+];
+$("#pivot").cypivot({
+    data : data
+});
+	</code>
+</pre>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								dimensions
+							</td>
+							<td>
+								map of objects
+							</td>
+							<td>
+								Map of dimension descriptors. E.g.
+<pre>
+	<code class="javascript">
+var dimensions = {
+    employee : {
+        label :'Employee', 
+        values : function(context) {
+            return [
+                {id:1, label:'John Brown'}, 
+                {id:2, label:'Bill Green'}, 
+                {id:3, label:'Daniel White'}
+            ];
+        },
+    },
+    department : {
+        label :'Department', 
+        values : function(context) {
+            return [
+                {id:1, label:'Accounting'}, 
+                {id:2, label:'Logistics'}, 
+                {id:3, label:'Administration'}
+            ];
+        },
+    },
+    // etc ...
+};
+$("#pivot").cypivot({
+    data : data,
+    dimensions : dimensions
+});
+	</code>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</p>		
+   		
+			<div class="page-header">
+				<h1 id="demo">Demo</h1>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<h3>
+						Simple example
+					</h3>
+					<p>
+						This example demonstrate base plugin's features.
+					</p>
+					<div>
+						<a href="example-simple.html" class="btn btn-info">Start Demo</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h3>
+						Custom Renderer
+					</h3>
+					<p>
+						User can specify custom cell renderer and change cell html. 
+					</p>
+					<div>
+						<a href="#" class="btn btn-info">Start Demo</a>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<h3>
+						Full Size Support
+					</h3>
+					<p>
+						If pivot table contains a lot of data you can make it to use all space in your browser.
+					</p>
+					<div>
+						<a href="#" class="btn btn-info">Start Demo</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="page-header">
+				<h1 id="about">About</h1>
+			</div>
+			<div>
+				The plugin is developed in <a href="http://www.cynteka.com">Cynteka</a> company by 
+				<a href="mailto:sergey.grigorchuk@gmail.com">Sergey Grigorchuk</a>.
+			</div>
+
+			<hr></hr>
+			<footer>
+				<p>
+					Cynteka Pivot Table is licensed under the <a href="http://opensource.org/licenses/MIT">MIT License</a>. 
+					Designed and developed by <a href="mailto:sergey.grigorchuk@gmail.com">Sergey Grigorchuk</a>.
+				</p>
+			</footer>
+
 		</div>
 	</body>
 </html>
