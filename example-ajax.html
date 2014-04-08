@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>
-			Cynteka Pivot Table 
+			Cynteka Pivot Table Ajax Example
 		</title>
 		<meta charset="utf-8">
 		
@@ -22,8 +22,10 @@
 		
         
 		<link rel="stylesheet" media="screen" href='css/jquery.cy-pivot.min.css'/>
+
+		<script src="js/jquery.sheetrock.js"></script>
         <script src='js/jquery.cy-pivot.js' type="text/javascript"></script>
-        <script src='js/example/simple.js' type="text/javascript"></script>
+        <script src='js/example/ajax.js' type="text/javascript"></script>
         
 		<link href="//highlightjs.org/static/styles/default.css" rel="stylesheet">
         <script src='//highlightjs.org/static/highlight.pack.js' type="text/javascript"></script>
@@ -40,8 +42,6 @@
 
   ga('create', 'UA-49029278-1', 'ukman.github.io');
   ga('send', 'pageview');
-
-  
 </script>
 	
 <style>
@@ -80,8 +80,35 @@ background-color:#5a5255;
 			<a class="btn btn-success" style="float:right" href="index.html">Back to plugin page</a>
 			<h1>
 				Cynteka Pivot Table
-				<small>Simple example</small>
+				<small>Ajax Example</small>
 			</h1>
+			<p class="lead">
+				In this example Cynteka Pivot plugin loads data from <strong>Google Spreadsheet</strong> data source. You can specify you own spreadsheet URL.
+				Please create your own spreadsheet, add column title in the first row (start from column A) and use the last column as value column that should be 
+				used inside pivot table (population, costs, area etc). Publish the document in the Internet, after that it will be available 
+				for pivotting on this page. 
+				Each expand event generates separate request to the datasource. Pivot table feeds only 
+				necessary portion of data. It allows to get rid of loading huge portion of data to the browser.  
+			</p>
+			<h4>Predefined data sources</h4>
+			<div style="margin-bottom:20px;">
+				<a class="btn btn-info" href="example-ajax.html?spreadsheet=https%3A%2F%2Fdocs.google.com%2Fspreadsheet%2Fccc%3Fkey%3D0AuYLuqmFOSWAdDluZ3JkTU5jaHhNU2dDU1BDU1lXZFE%23gid%3D0">Restaurants, Goods, Stores, Money...</a>
+				<a class="btn btn-info" href="example-ajax.html?spreadsheet=https%3A%2F%2Fdocs.google.com%2Fspreadsheet%2Fccc%3Fkey%3D0AuYLuqmFOSWAdE9FbTduaWRlSURHdGJYRjJhMTJKRGc%26usp%3Ddrive_web%23gid%3D0">Cities, Rivers, Countries, Population...</a>
+			</div>
+			<h4>You can select your own datasource</h4>
+			<div class="row">
+				<form action="example-ajax.html" type="GET" class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="url" class="col-md-2 control-label">Google spreadsheet URL</label>
+    					<div class="col-md-10 input-group">
+							<input type="text" name="spreadsheet" id="spreadsheet" class="form-control" placeholder="Spreadsheet URL"></input>
+							<span class="input-group-btn">
+								<input type="submit" class="btn btn-default" type="button" value="Go!"></input>
+							</span>
+      					</div>
+					</div>
+				</form>
+			</div>
 			<div id="pivot">
 				<div class="alert alert-danger">It seems the plugin is not working in your browser. Please use one of the following web browser:
 				<ul>
@@ -101,6 +128,8 @@ background-color:#5a5255;
 				</div>
 			</div>
 			
+			<div id="invisible">
+			</div>
 
 			<hr></hr>
 			<footer>
