@@ -176,12 +176,12 @@
 			$pivotDataTable = $table.find('.' + opts.div22Class + ' .' + opts.pivotDataTableClass);
 
 			var $horizontalDimDiv = $table.find('.' + opts.div21Class);
-			var values = drawDimension($horizontalDimDiv, opts, opts.horizontalDimensions, [], curData);
+			var dimData = opts.dimData ? opts.dimData : curData;
+			var values = drawDimension($horizontalDimDiv, opts, opts.horizontalDimensions, [], dimData);
 			insertRows($pivotDataTable[0], opts, 0, values.length);
 			
-			
 			var $verticalDimDiv = $table.find('.' + opts.div12Class);
-			values = drawDimension($verticalDimDiv, opts, opts.verticalDimensions, [], curData);
+			values = drawDimension($verticalDimDiv, opts, opts.verticalDimensions, [], dimData);
 			insertColumns($pivotDataTable[0], opts, 0, values.length, curData);
 
 			syncDimensionsSizes($table, opts);
@@ -484,7 +484,7 @@
 						$this.removeClass(opts.expandedDimLabelClass).addClass(opts.collapsedDimLabelClass);
 						$this.parent().removeClass(opts.expandedDimCellClass).addClass(opts.collapsedDimCellClass);
 
-						fillDataValues($table, opts);
+						// fillDataValues($table, opts);
 						syncDimensionsSizes($table, opts);
 					});
 				}
@@ -496,7 +496,8 @@
 				var $parent = $this.parent();
 
 				var callBack = function(curData) {
-					drawDimension($parent, opts, opts.verticalDimensions, null, curData);
+					var dimData = opts.dimData ? opts.dimData : curData;
+					drawDimension($parent, opts, opts.verticalDimensions, null, dimData);
 					var colCount = dimColSubLevelCount($this, opts);
 					if(colCount > 0) {
 						$this.addClass(opts.expandedDimLabelClass).removeClass(opts.collapsedDimLabelClass);
@@ -508,6 +509,7 @@
 					}
 					syncDimensionsSizes($table, opts);
 					
+					fillCellContexts($table, opts);
 					onExpand = opts.onExpand;
 				};
 				// Create context
@@ -524,7 +526,7 @@
 				}
 			}
 			if(resync) {
-				fillDataValues($table, opts);
+				// fillDataValues($table, opts);
 				if(opts.resizable) {
 					if(opts.resizableWidth) {
 						doResizeWidth($table);
@@ -574,7 +576,8 @@
 				
 				var rowIdx = getRowIndex($this, opts);
 				var callBack = function(curData) {
-					drawDimension($parent, opts, opts.horizontalDimensions, null, curData);
+					var dimData = opts.dimData ? opts.dimData : curData;
+					drawDimension($parent, opts, opts.horizontalDimensions, null, dimData);
 					$this.addClass(opts.expandedDimLabelClass).removeClass(opts.collapsedDimLabelClass);
 					$parent.addClass(opts.expandedDimCellClass).removeClass(opts.collapsedDimCellClass);
 					var rowCount = dimRowSubLevelCount($this, opts);
@@ -585,6 +588,7 @@
 					syncDimensionsSizes($table, opts);
 					
 					onExpand = opts.onExpand;
+					fillCellContexts($table, opts);
 
 				};
 
@@ -613,7 +617,7 @@
 					}
 					// doResize($table);
 				}
-				fillDataValues($table, opts);
+				// fillDataValues($table, opts);
 				if(onCollapse) {
 					onCollapse(this);
 				}
@@ -624,7 +628,7 @@
 			}
 			var t2 = new Date();
 			// jQuery('#log').html("Time = " + (t2.valueOf() - t1.valueOf()));
-			return false;
+			return true;
 		});
 	}
 	
@@ -723,6 +727,25 @@
 					jQuery(cell).html('<div class="' + opts.divDataCellClass + '">' + html + '</div>');
 					cell.isCalculated = true;
 				}
+			}
+		}
+	}
+	
+	function fillCellContexts($table, opts) {
+		var rowContexts = getRowContexts($table, opts);
+		var colContexts = getColContexts($table, opts);
+		var $dataTable = $table.find('.' + opts.div22Class + ' .' + opts.pivotDataTableClass);
+		var dataTable = $dataTable[0];
+		var rowItems;
+		for(var rowIdx = 0; rowIdx < dataTable.rows.length; rowIdx++) {
+			var row = dataTable.rows[rowIdx];
+			var rowContext = rowContexts[rowIdx];
+			rowItems = null;
+			for(var colIdx = 0; colIdx < row.cells.length; colIdx++) {
+				var colContext = colContexts[colIdx];
+				var cell = row.cells[colIdx];
+				cell.colContext = colContext;
+				cell.rowContext = rowContext;
 			}
 		}
 	}
@@ -940,7 +963,10 @@
 			}
 			var values;
 			if(dim.values) {
-				values = dim.values(context, onDataLoad); 
+				if(typeof(dim.values) == 'function')
+					values = dim.values(context, onDataLoad);
+				if(typeof(dim.values) == 'object') 
+					values = dim.values;
 			} else {
 				// curData = opts.dataProvider(opts, [], [opts.verticalDimensions[0], opts.horizontalDimensions[0]]);
 				values = getDataValues(curData, context, dimName, dim.sortFieldName);				
@@ -967,7 +993,7 @@
 			var item = items[i];
 			var apply = applyDataFilter(item, context);
 			var value = item[dimName];
-			var valueId = typeof(value) == 'object' ? value.id : value;
+			var valueId = value && typeof(value) == 'object' ? value.id : value;
 			if(value && value != Number.POSITIVE_INFINITY && exist[valueId] != true) {
 				exist[valueId] = true;
 				res.push(value);
@@ -1099,7 +1125,15 @@
 		if(dim) {
 			// var values = dim.values(context);
 			// var curData = opts.dataProvider(opts, [], [opts.verticalDimensions[0], opts.horizontalDimensions[0]]);//  TODO 
-			var values = dim.values ? dim.values(context) : getDataValues(curData, context, dimName, dim.sortFieldName);
+			var values = null;
+			if(dim.values) {
+				if(typeof(dim.values) == 'function')
+					values = dim.values(context);
+				if(typeof(dim.values) == 'object')
+					values = dim.values;
+			} else {
+				values = getDataValues(curData, context, dimName, dim.sortFieldName);
+			}
 			res = values;
 			if(values.length > 0) {
 				$div.children('.' + opts.dimLabelClass).css({width: ''});
@@ -1140,7 +1174,8 @@
 					$divLabel.addClass(opts.expandedDimLabelClass);
 					$divLabel.parent().addClass(opts.expandedDimCellClass);
 					var $childDiv = $div.children('.' + opts.pivotIdClassPrefix + valueId);
-					drawDimension($childDiv, opts, dimensions, newContext, curData);
+					var dimData = opts.dimData ? opts.dimData : curData;
+					drawDimension($childDiv, opts, dimensions, newContext, dimData);
 				} else {
 					if(newContext.length < dimensions.length) {
 						$divLabel.addClass(opts.collapsedDimLabelClass);
