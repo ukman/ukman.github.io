@@ -291,7 +291,29 @@ $("#pivot").cypivot({
 								function(items, colContext, rowContext, opts)
 							</td>
 							<td>
-								The function that create html for a cell specified by colContext/rowContext params.
+								The function that create html for a cell specified by colContext/rowContext params. E.g.
+<pre>
+dataCellRenderer : function(items, colContext, rowContext, opts) {
+	
+	var html = "";
+	for(var i = 0; i < opts.valueDataFields.length; i++) {
+		var valueDataField = opts.valueDataFields[i];
+		var val = items['default'].sum[valueDataField];
+		var signClass = '';
+		if(val < 0) {
+			signClass = 'negative-value'
+		}
+		if(val > 0) {
+			signClass = 'positive-value'
+		}
+		if(val == 0) {
+			signClass = 'zero-value'
+		}
+		html = html + "<span class='value-" + valueDataField + " " + signClass + "'>" + val + "</span> ";
+	}				
+	return html;
+},
+</pre>								
 							</td>
 						</tr>
 
@@ -336,6 +358,61 @@ $("#pivot").cypivot({
 	</code>
 							</td>
 						</tr>
+						<tr>
+							<td>
+								verticalDimensions
+							</td>
+							<td>
+								array of strings
+							</td>
+							<td>
+								Array of dimension's names that should be used for columns. E.g.
+<pre>
+$("#pivot").cypivot({
+    data : data,
+    dimensions : dimensions,
+	verticalDimensions	: ['year', 'month', 'day']
+});
+</pre>								
+							</td>
+						</tr>
+						<tr>
+							<td>
+								horizontalDimensions
+							</td>
+							<td>
+								array of strings
+							</td>
+							<td>
+								Array of dimension's names that should be used for rows. E.g.
+<pre>
+$("#pivot").cypivot({
+    data : data,
+    dimensions : dimensions,
+	horizontalDimensions : ['company', 'department', 'employee']
+});
+</pre>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								valueDataFields
+							</td>
+							<td>
+								array of strings
+							</td>
+							<td>
+								Array of fields in data objects that should be used as value fields. E.g.
+<pre>
+$("#pivot").cypivot({
+    data : data,
+    dimensions : dimensions,
+	valueDataFields : ["inputAmount", "outputAmount"]
+});
+</pre>
+							</td>
+						</tr>
+						
 					</tbody>
 				</table>
 			</p>		
