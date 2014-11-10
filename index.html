@@ -366,24 +366,6 @@ $("#pivot").cypivot({
 						</tr>
 						<tr>
 							<td>
-								verticalDimensions
-							</td>
-							<td>
-								array of strings
-							</td>
-							<td>
-								Array of dimension's names that should be used for columns. E.g.
-<pre>
-$("#pivot").cypivot({
-    data : data,
-    dimensions : dimensions,
-	verticalDimensions	: ['year', 'month', 'day']
-});
-</pre>								
-							</td>
-						</tr>
-						<tr>
-							<td>
 								horizontalDimensions
 							</td>
 							<td>
@@ -416,6 +398,24 @@ $("#pivot").cypivot({
 	valueDataFields : ["inputAmount", "outputAmount"]
 });
 </pre>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								verticalDimensions
+							</td>
+							<td>
+								array of strings
+							</td>
+							<td>
+								Array of dimension's names that should be used for columns. E.g.
+<pre>
+$("#pivot").cypivot({
+    data : data,
+    dimensions : dimensions,
+	verticalDimensions	: ['year', 'month', 'day']
+});
+</pre>								
 							</td>
 						</tr>
 						
