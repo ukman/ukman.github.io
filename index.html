@@ -245,7 +245,10 @@ $("#pivot").cypivot({ /* Params go here ... */ });
 								If <strong>true</strong> then user can reconfigurate column/row dimensions. If <strong>false</strong> user can not do this.
 								If you want to allow the user to reconfigurate only columns or rows, use the the following way:
 <pre>
-configuration	 : {horizontalDimensions : true, verticalDimensions : false}
+$("#pivot").cypivot({
+  configuration : {horizontalDimensions : true, verticalDimensions : false}
+  ...
+});
 </pre> 
 							</td>
 						</tr>
