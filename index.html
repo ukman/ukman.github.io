@@ -214,7 +214,9 @@ ga('send', 'pageview');
 					Constructor
 				</h3>
 <pre>
+<code class="javascript">
 $("#pivot").cypivot({ /* Params go here ... */ });
+</code>
 </pre>				
 				
 				<table class="table table-border table-striped">
@@ -245,10 +247,12 @@ $("#pivot").cypivot({ /* Params go here ... */ });
 								If <strong>true</strong> then user can reconfigurate column/row dimensions. If <strong>false</strong> user can not do this.
 								If you want to allow the user to reconfigurate only columns or rows, use the the following way:
 <pre>
+<code class="javascript">
 $("#pivot").cypivot({
   configuration : {horizontalDimensions : true, verticalDimensions : false}
   ...
 });
+</code>
 </pre> 
 							</td>
 						</tr>
@@ -299,8 +303,8 @@ $("#pivot").cypivot({
 							<td>
 								The function that create html for a cell specified by colContext/rowContext params. E.g.
 <pre>
+<code class="javascript">
 dataCellRenderer : function(items, colContext, rowContext, opts) {
-	
 	var html = "";
 	for(var i = 0; i < opts.valueDataFields.length; i++) {
 		var valueDataField = opts.valueDataFields[i];
@@ -319,6 +323,8 @@ dataCellRenderer : function(items, colContext, rowContext, opts) {
 	}				
 	return html;
 },
+// ...
+</code>
 </pre>								
 							</td>
 						</tr>
@@ -374,11 +380,13 @@ $("#pivot").cypivot({
 							<td>
 								Array of dimension's names that should be used for rows. E.g.
 <pre>
+<code class="javascript">
 $("#pivot").cypivot({
     data : data,
     dimensions : dimensions,
     horizontalDimensions : ['company', 'department', 'employee']
 });
+</code>
 </pre>
 							</td>
 						</tr>
@@ -392,11 +400,13 @@ $("#pivot").cypivot({
 							<td>
 								Array of fields in data objects that should be used as value fields. E.g.
 <pre>
+<code class="javascript">
 $("#pivot").cypivot({
     data : data,
     dimensions : dimensions,
     valueDataFields : ["inputAmount", "outputAmount"]
 });
+</code>
 </pre>
 							</td>
 						</tr>
@@ -410,11 +420,13 @@ $("#pivot").cypivot({
 							<td>
 								Array of dimension's names that should be used for columns. E.g.
 <pre>
+<code class="javascript">
 $("#pivot").cypivot({
     data : data,
     dimensions : dimensions,
     verticalDimensions : ['year', 'month', 'day']
 });
+</code>
 </pre>								
 							</td>
 						</tr>
@@ -450,6 +462,7 @@ $("#pivot").cypivot({
 								Refreshes all data within pivot table.
 								E.g.
 <pre>
+<code class="javascript">
 var newData = [
   {
     year : 2014,
@@ -462,6 +475,7 @@ var newData = [
   }
 ];							
 $('#pivot').cypivot('reload', newData);
+</code>
 </pre>
 							</td>
 						</tr>
