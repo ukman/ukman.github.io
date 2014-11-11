@@ -449,7 +449,20 @@ $("#pivot").cypivot({
 							<td>
 								Refreshes all data within pivot table.
 								E.g.
-								$('#pivot').cypivot('reload', newData);
+<pre>
+var newData = [
+  {
+    year : 2014,
+    month : {id : 1, label : 'January'},
+    day : 20,
+    company : {id : 1, label : 'Jack and sons'},
+    department : {id : 1, label : 'Administration'},
+    employee : {id : 1, label : 'Jack'},
+    hours : 8
+  }
+];							
+$('#pivot').cypivot('reload', newData);
+</pre>
 							</td>
 						</tr>
 					</tbody>
